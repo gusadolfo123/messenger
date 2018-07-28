@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html class="h-100">
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
@@ -13,8 +13,13 @@
     <!-- Styles -->
     
 </head>
-<body>
-    <div id="app">
+<body class="h-100">
+
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        {{ csrf_field() }}
+    </form>
+    
+    <div id="app" class="h-100">
 
         <b-navbar toggleable type="dark" variant="primary">
             
@@ -27,22 +32,17 @@
             <b-collapse is-nav id="nav_text_collapse">
                 <b-navbar-nav class="ml-auto">
                     @guest
-                    <b-nav-item href="{{ route('login') }}">Ingresar</b-nav-item>
-                    <b-nav-item href="{{ route('register') }}">Registro</b-nav-item>
-                    <b-nav-item-dropdown text="User" right>
-                      <b-dropdown-item href="{{ route('logout') }}">Cerrar Sesion</b-dropdown-item>                      
-                    </b-nav-item-dropdown>
+                        <b-nav-item href="{{ route('login') }}">Ingresar</b-nav-item>
+                        <b-nav-item href="{{ route('register') }}">Registro</b-nav-item>                    
                     @else
-                    <b-nav-item-dropdown text="User" right>
-                      <b-dropdown-item href="{{ route('logout') }}">Cerrar Sesion</b-dropdown-item>                      
-                    </b-nav-item-dropdown>
+                        <b-nav-item-dropdown text="{{ Auth::user()->name }}" right>
+                          <b-dropdown-item href="#" @click="logout">Cerrar Sesion</b-dropdown-item>                      
+                        </b-nav-item-dropdown>
                     @endguest
                 </b-navbar-nav>
             </b-collapse>
 
-        </b-navbar>
-
-        
+        </b-navbar>     
 
         @yield('content')
 

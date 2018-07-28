@@ -4,11 +4,22 @@
 <b-container>
     <b-row align-h="center">
         <b-col cols="8">
-            <b-card title="Inicio de Sesion">
-                <b-alert show>
-                    Por Favor Ingrese sus Datos:
-                </b-alert>
-                
+            <b-card title="Inicio de Sesion" class="my-3">
+               
+                @if ($errors->any())
+                    <b-alert show variant="danger" dismissible>
+                        <ul class="mb-0">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>                    
+                    </b-alert>
+                @else
+                    <b-alert>
+                        Por Favor Ingrese sus Datos:
+                    </b-alert>
+                @endif
+
                 <b-form method="POST" action="{{ route('login') }}">
                     {{ csrf_field() }}
 
@@ -23,12 +34,7 @@
                                               required
                                               autofocus
                                               placeholder="example@hotmail.com">
-                                </b-form-input>
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
+                                </b-form-input>                               
                     </b-form-group>
 
                     <b-form-group label="Contraseña:"
@@ -40,12 +46,7 @@
                                               name="password"
                                               value="{{ old('password') }}"
                                               required>
-                                </b-form-input>
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
+                                </b-form-input>                                
                     </b-form-group>
 
                     <b-form-group>
